@@ -105,6 +105,20 @@
   .gh { stroke: var(--glow); stroke-width: 1.1; }
   .gd { fill: var(--soft); }
   .gn { fill: var(--glow); }
+  .graph-wrap { position: relative; }
+  .gl {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    margin-top: -7px;
+    font: 11px/1 'Geist Mono', ui-monospace, monospace;
+    color: var(--muted);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .gl.below { transform: translate(-50%, 0); margin-top: 8px; }
+  .gl.end { transform: translate(-100%, -100%); margin-left: 6px; }
+  .gl.hot { color: var(--ink); }
+  @media (max-width: 520px) { .gl { font-size: 10px; } .gl.faint { display: none; } }
   .gpulse { animation: gpulse 4s ease-in-out infinite alternate; transform-origin: 300px 170px; }
   @keyframes gpulse { from { opacity: .6; transform: scale(.9); } to { opacity: 1; transform: scale(1.15); } }
 
@@ -164,6 +178,7 @@
     </div>
 
     <figure>
+      <div class="graph-wrap">
       <svg class="graph" viewBox="0 0 600 340" role="img" aria-label="A loose web of connected points spreading out from one center">
       <defs><radialGradient id="gglow"><stop offset="0" stop-color="#59adff" stop-opacity=".5"/><stop offset="1" stop-color="#59adff" stop-opacity="0"/></radialGradient></defs>
       <line class="ge" x1="300.0" y1="170.0" x2="279.3" y2="183.8" opacity="0.92"/>
@@ -341,21 +356,12 @@
       <circle cx="305.6" cy="198.9" r="2.3" class="gd" opacity="0.87"/>
       <circle cx="368.9" cy="116.7" r="2.0" class="gd" opacity="0.71"/>
       </svg>
-          </li>
-          <li><span class="branch">school</span>
-            <ul>
-              <li><span class="leaf"><span class="k">classes</span><span class="note">problem sets due Fridays</span></span></li>
-            </ul>
-          </li>
-          <li><span class="branch">personal</span>
-            <ul>
-              <li><span class="leaf"><span class="k">groceries</span><span class="note">same store, ordered on Sundays</span></span></li>
-              <li><span class="leaf"><span class="k">doctor</span><span class="note">signs in through the patient portal</span></span></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
+      <span class="gl below hot" style="left:50.00%;top:50.00%">you</span>
+      <span class="gl hot" style="left:63.47%;top:45.68%">work</span>
+      <span class="gl hot" style="left:87.53%;top:55.26%">email</span>
+      <span class="gl faint" style="left:39.78%;top:37.38%">school</span>
+      <span class="gl below faint" style="left:55.80%;top:73.79%">personal</span>
+      </div>
     </figure>
 
     <p class="coda">The aim is that, over time, it comes to work much as you would yourself.</p>
