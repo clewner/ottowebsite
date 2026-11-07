@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>otto</title>
+<meta name="description" content="Otto is a personal agent for your Mac, built around knowing you.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='7' fill='%2359adff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f5f1;
+    --ink: #171615;
+    --soft: #55534e;
+    --muted: #9a978f;
+    --rule: #e1ded6;
+    --line: #cdc9bf;
+    --glow: #59adff;
+    --hl: rgba(89, 173, 255, 0.2);
+    --haze: rgba(89, 173, 255, 0.15);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #111111;
+      --ink: #ecebe7;
+      --soft: #aaa8a1;
+      --muted: #6d6b66;
+      --rule: #262624;
+      --line: #3a3936;
+      --hl: rgba(89, 173, 255, 0.24);
+      --haze: rgba(89, 173, 255, 0.11);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); color: var(--ink); }
+  body {
+    position: relative;
+    min-height: 100vh;
+    font-family: 'Libre Caslon Text', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--hl); }
+
+  .haze {
+    position: absolute;
+    top: -20vh; right: -20vw;
+    width: 80vw; height: 80vw;
+    max-width: 900px; max-height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--haze), transparent 65%);
+    pointer-events: none;
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-6vw, 4vh) scale(1.08); }
+  }
+
+  .wrap { position: relative; max-width: 620px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; line-height: 1.5; color: var(--muted); }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 32px;
+  }
+  .mark { font-size: 24px; font-weight: 400; letter-spacing: -0.02em; line-height: 1; }
+
+  h1 {
+    margin-top: 22vh;
+    font-size: clamp(28px, 4.6vw, 38px);
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+  }
+
+  .thesis { margin-top: 80px; }
+  .thesis p + p { text-indent: 1.6em; }
+
+  .label {
+    margin-top: 88px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  figure { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--rule); }
+  figcaption { margin-top: 24px; }
+
+  /* memory tree */
+  .tree {
+    list-style: none;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .tree ul { list-style: none; margin-left: 4px; }
+  .tree ul li {
+    position: relative;
+    padding: 4px 0 4px 24px;
+    border-left: 1px solid var(--line);
+  }
+  .tree ul li:last-child { border-left-color: transparent; }
+  .tree ul li::before {
+    content: '';
+    position: absolute;
+    left: -1px; top: 0;
+    width: 16px; height: 15px;
+    border-left: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    border-bottom-left-radius: 7px;
+  }
+  .root { display: inline-flex; align-items: center; gap: 8px; }
+  .root i {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--glow); box-shadow: 0 0 10px var(--glow);
+  }
+  .branch { color: var(--soft); }
+  .leaf .k { color: var(--ink); }
+  .leaf .note { color: var(--muted); }
+  .leaf .note::before { content: '  '; white-space: pre; }
+
+  .coda {
+    margin-top: 88px;
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  footer {
+    margin: 104px 0 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 520px) {
+    body { font-size: 17px; }
+    .meta-long { display: none; }
+    .tree { font-size: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .haze { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="haze" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <span class="mark">otto</span>
+      <span class="mono">a personal agent<span class="meta-long"> · 2026</span></span>
+    </header>
+
+    <h1>Otto is a personal agent for the Mac, designed to work as an extension of the person using it.</h1>
+
+    <div class="thesis">
+      <p>Much of the recent work on personal agents assumes that the best agent is one you can
+      hand a task to and leave alone. What this tends to overlook is context. An agent is only as
+      useful as its understanding of the person it works for: what they are working toward, how
+      they tend to go about things, and what they would want done next. Most agents begin each
+      task knowing very little of this.</p>
+
+      <p>Many everyday tasks are also not well suited to being handed off entirely. People generally
+      want to see what is being done on their behalf, many tasks need their input at some point
+      along the way, and some can only be done on their own computer.</p>
+
+      <p>Otto is an attempt at an agent that works as an extension of you rather than as a separate
+      assistant. It runs on your Mac and does its work on your screen, where each step can be seen
+      as it happens. It offers what it expects you will want to do next, and if you accept, it
+      carries the task out in front of you, waiting wherever a step requires your input.</p>
+
+      <p>Because it works alongside you, Otto is also in a position to learn from you. It gradually
+      builds up a sense of what you are working toward, the tools you rely on, and how you prefer
+      things to be done, and it draws on this each time it suggests what to do next.</p>
+    </div>
+
+    <figure>
+    <ul class="tree" aria-label="An example of what Otto learns">
+      <li><span class="root"><i></i>you</span>
+        <ul>
+          <li><span class="branch">work</span>
+            <ul>
+              <li><span class="leaf"><span class="k">projects</span><span class="note">what's open, what's next</span></span></li>
+              <li><span class="leaf"><span class="k">habits</span><span class="note">the tools you reach for</span></span></li>
+            </ul>
+          </li>
+          <li><span class="branch">school</span>
+            <ul>
+              <li><span class="leaf"><span class="k">classes</span><span class="note">deadlines and routines</span></span></li>
+            </ul>
+          </li>
+          <li><span class="branch">life</span>
+            <ul>
+              <li><span class="leaf"><span class="k">errands</span><span class="note">the steps you always take</span></span></li>
+              <li><span class="leaf"><span class="k">preferences</span><span class="note">how you like things done</span></span></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+      <figcaption class="mono">An example of what Otto might learn about someone.</figcaption>
+    </figure>
+
+    <p class="coda">The aim is that, over time, it comes to work much as you would yourself.</p>
+
+    <footer class="mono"><span>© 2026 otto</span><span>macOS · early access soon</span></footer>
+  </div>
+</body>
+</html>
