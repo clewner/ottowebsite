@@ -35,7 +35,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--paper); color: var(--ink); }
+  html, body { background: var(--paper); color: var(--ink); overflow-x: clip; }
   body {
     position: relative;
     min-height: 100vh;
@@ -47,6 +47,12 @@
   }
   ::selection { background: var(--hl); }
 
+  .haze-box {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
   .haze {
     position: absolute;
     top: -20vh; right: -20vw;
@@ -151,7 +157,7 @@
 </style>
 </head>
 <body>
-  <div class="haze" aria-hidden="true"></div>
+  <div class="haze-box" aria-hidden="true"><div class="haze"></div></div>
 
   <div class="wrap">
     <header>
