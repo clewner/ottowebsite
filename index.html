@@ -99,38 +99,14 @@
   figure { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--rule); }
   figcaption { margin-top: 24px; }
 
-  /* memory tree */
-  .tree {
-    list-style: none;
-    font-family: 'Geist Mono', ui-monospace, monospace;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .tree ul { list-style: none; margin-left: 4px; }
-  .tree ul li {
-    position: relative;
-    padding: 4px 0 4px 24px;
-    border-left: 1px solid var(--line);
-  }
-  .tree ul li:last-child { border-left-color: transparent; }
-  .tree ul li::before {
-    content: '';
-    position: absolute;
-    left: -1px; top: 0;
-    width: 16px; height: 15px;
-    border-left: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    border-bottom-left-radius: 7px;
-  }
-  .root { display: inline-flex; align-items: center; gap: 8px; }
-  .root i {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--glow); box-shadow: 0 0 10px var(--glow);
-  }
-  .branch { color: var(--soft); }
-  .leaf .k { color: var(--ink); }
-  .leaf .note { color: var(--muted); }
-  .leaf .note::before { content: '  '; white-space: pre; }
+  /* memory graph */
+  .graph { display: block; width: 100%; height: auto; overflow: visible; }
+  .ge { stroke: var(--line); stroke-width: .8; }
+  .gh { stroke: var(--glow); stroke-width: 1.1; }
+  .gd { fill: var(--soft); }
+  .gn { fill: var(--glow); }
+  .gpulse { animation: gpulse 4s ease-in-out infinite alternate; transform-origin: 300px 170px; }
+  @keyframes gpulse { from { opacity: .6; transform: scale(.9); } to { opacity: 1; transform: scale(1.15); } }
 
   .coda {
     margin-top: 88px;
@@ -149,10 +125,9 @@
   @media (max-width: 520px) {
     body { font-size: 17px; }
     .meta-long { display: none; }
-    .tree { font-size: 12px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .haze { animation: none; }
+    .haze, .gpulse { animation: none; }
   }
 </style>
 </head>
@@ -189,14 +164,183 @@
     </div>
 
     <figure>
-    <ul class="tree" aria-label="An example of what Otto learns">
-      <li><span class="root"><i></i>you</span>
-        <ul>
-          <li><span class="branch">work</span>
-            <ul>
-              <li><span class="leaf"><span class="k">email</span><span class="note">replies the same day, keeps it short</span></span></li>
-              <li><span class="leaf"><span class="k">calendar</span><span class="note">no meetings before 10</span></span></li>
-            </ul>
+      <svg class="graph" viewBox="0 0 600 340" role="img" aria-label="A loose web of connected points spreading out from one center">
+      <defs><radialGradient id="gglow"><stop offset="0" stop-color="#59adff" stop-opacity=".5"/><stop offset="1" stop-color="#59adff" stop-opacity="0"/></radialGradient></defs>
+      <line class="ge" x1="300.0" y1="170.0" x2="279.3" y2="183.8" opacity="0.92"/>
+      <line class="ge" x1="300.0" y1="170.0" x2="305.6" y2="198.9" opacity="0.86"/>
+      <line class="ge" x1="92.7" y1="205.3" x2="69.6" y2="154.7" opacity="0.40"/>
+      <line class="ge" x1="92.7" y1="205.3" x2="56.9" y2="250.7" opacity="0.27"/>
+      <line class="ge" x1="92.7" y1="205.3" x2="120.7" y2="157.5" opacity="0.44"/>
+      <line class="ge" x1="382.8" y1="275.0" x2="334.8" y2="250.9" opacity="0.46"/>
+      <line class="ge" x1="382.8" y1="275.0" x2="371.3" y2="236.1" opacity="0.46"/>
+      <line class="ge" x1="323.7" y1="122.7" x2="352.7" y2="86.7" opacity="0.59"/>
+      <line class="ge" x1="323.7" y1="122.7" x2="285.9" y2="128.8" opacity="0.77"/>
+      <line class="ge" x1="323.7" y1="122.7" x2="301.9" y2="81.7" opacity="0.59"/>
+      <line class="ge" x1="323.7" y1="122.7" x2="347.3" y2="145.5" opacity="0.77"/>
+      <line class="ge" x1="323.7" y1="122.7" x2="322.6" y2="151.3" opacity="0.77"/>
+      <line class="ge" x1="519.7" y1="247.7" x2="525.2" y2="187.9" opacity="0.33"/>
+      <line class="ge" x1="519.7" y1="247.7" x2="454.9" y2="278.6" opacity="0.33"/>
+      <line class="ge" x1="519.7" y1="247.7" x2="488.3" y2="212.0" opacity="0.33"/>
+      <line class="ge" x1="577.5" y1="211.2" x2="525.2" y2="187.9" opacity="0.26"/>
+      <line class="ge" x1="577.5" y1="211.2" x2="575.3" y2="150.5" opacity="0.26"/>
+      <line class="ge" x1="69.6" y1="154.7" x2="12.6" y2="165.7" opacity="0.26"/>
+      <line class="ge" x1="69.6" y1="154.7" x2="120.7" y2="157.5" opacity="0.40"/>
+      <line class="ge" x1="69.6" y1="154.7" x2="33.3" y2="112.3" opacity="0.26"/>
+      <line class="ge" x1="281.3" y1="211.1" x2="251.6" y2="207.5" opacity="0.78"/>
+      <line class="ge" x1="281.3" y1="211.1" x2="279.3" y2="183.8" opacity="0.80"/>
+      <line class="ge" x1="281.3" y1="211.1" x2="305.6" y2="198.9" opacity="0.80"/>
+      <line class="ge" x1="442.8" y1="218.0" x2="449.6" y2="178.6" opacity="0.57"/>
+      <line class="ge" x1="442.8" y1="218.0" x2="454.9" y2="278.6" opacity="0.35"/>
+      <line class="ge" x1="357.1" y1="193.2" x2="337.9" y2="174.7" opacity="0.82"/>
+      <line class="ge" x1="357.1" y1="193.2" x2="380.8" y2="155.3" opacity="0.78"/>
+      <line class="ge" x1="357.1" y1="193.2" x2="331.1" y2="206.1" opacity="0.81"/>
+      <line class="ge" x1="357.1" y1="193.2" x2="371.3" y2="236.1" opacity="0.64"/>
+      <line class="ge" x1="238.7" y1="127.1" x2="258.6" y2="92.2" opacity="0.62"/>
+      <line class="ge" x1="238.7" y1="127.1" x2="205.4" y2="144.6" opacity="0.73"/>
+      <line class="ge" x1="238.7" y1="127.1" x2="212.4" y2="95.6" opacity="0.58"/>
+      <line class="ge" x1="238.7" y1="127.1" x2="264.5" y2="145.8" opacity="0.74"/>
+      <line class="ge" x1="238.7" y1="127.1" x2="230.7" y2="161.5" opacity="0.74"/>
+      <line class="ge" x1="334.8" y1="250.9" x2="327.1" y2="306.9" opacity="0.35"/>
+      <line class="ge" x1="334.8" y1="250.9" x2="331.1" y2="206.1" opacity="0.61"/>
+      <line class="ge" x1="334.8" y1="250.9" x2="285.9" y2="270.0" opacity="0.53"/>
+      <line class="ge" x1="334.8" y1="250.9" x2="371.3" y2="236.1" opacity="0.61"/>
+      <line class="ge" x1="352.7" y1="86.7" x2="330.9" y2="44.4" opacity="0.41"/>
+      <line class="ge" x1="352.7" y1="86.7" x2="368.9" y2="116.7" opacity="0.59"/>
+      <line class="ge" x1="157.8" y1="112.0" x2="153.6" y2="51.1" opacity="0.33"/>
+      <line class="ge" x1="157.8" y1="112.0" x2="212.4" y2="95.6" opacity="0.54"/>
+      <line class="ge" x1="157.8" y1="112.0" x2="111.8" y2="111.5" opacity="0.44"/>
+      <line class="ge" x1="495.1" y1="141.7" x2="448.1" y2="121.7" opacity="0.48"/>
+      <line class="ge" x1="495.1" y1="141.7" x2="516.5" y2="79.2" opacity="0.30"/>
+      <line class="ge" x1="495.1" y1="141.7" x2="525.2" y2="187.9" opacity="0.41"/>
+      <line class="ge" x1="258.6" y1="92.2" x2="285.9" y2="128.8" opacity="0.62"/>
+      <line class="ge" x1="258.6" y1="92.2" x2="212.4" y2="95.6" opacity="0.58"/>
+      <line class="ge" x1="258.6" y1="92.2" x2="301.9" y2="81.7" opacity="0.59"/>
+      <line class="ge" x1="285.9" y1="128.8" x2="264.5" y2="145.8" opacity="0.80"/>
+      <line class="ge" x1="285.9" y1="128.8" x2="322.6" y2="151.3" opacity="0.80"/>
+      <line class="ge" x1="449.6" y1="178.6" x2="413.1" y2="194.9" opacity="0.61"/>
+      <line class="ge" x1="449.6" y1="178.6" x2="488.3" y2="212.0" opacity="0.47"/>
+      <line class="ge" x1="205.4" y1="144.6" x2="212.4" y2="95.6" opacity="0.58"/>
+      <line class="ge" x1="205.4" y1="144.6" x2="230.7" y2="161.5" opacity="0.73"/>
+      <line class="ge" x1="337.9" y1="174.7" x2="331.1" y2="206.1" opacity="0.81"/>
+      <line class="ge" x1="337.9" y1="174.7" x2="347.3" y2="145.5" opacity="0.83"/>
+      <line class="ge" x1="337.9" y1="174.7" x2="322.6" y2="151.3" opacity="0.89"/>
+      <line class="ge" x1="280.3" y1="36.2" x2="223.7" y2="36.9" opacity="0.35"/>
+      <line class="ge" x1="280.3" y1="36.2" x2="301.9" y2="81.7" opacity="0.37"/>
+      <line class="ge" x1="280.3" y1="36.2" x2="330.9" y2="44.4" opacity="0.37"/>
+      <line class="ge" x1="448.1" y1="121.7" x2="399.8" y2="101.1" opacity="0.56"/>
+      <line class="ge" x1="448.1" y1="121.7" x2="411.1" y2="136.9" opacity="0.56"/>
+      <line class="ge" x1="110.0" y1="258.5" x2="56.9" y2="250.7" opacity="0.27"/>
+      <line class="ge" x1="110.0" y1="258.5" x2="150.7" y2="225.8" opacity="0.36"/>
+      <line class="ge" x1="161.8" y1="179.2" x2="202.7" y2="199.3" opacity="0.64"/>
+      <line class="ge" x1="161.8" y1="179.2" x2="150.7" y2="225.8" opacity="0.53"/>
+      <line class="ge" x1="161.8" y1="179.2" x2="120.7" y2="157.5" opacity="0.53"/>
+      <line class="ge" x1="256.2" y1="177.0" x2="251.6" y2="207.5" opacity="0.78"/>
+      <line class="ge" x1="256.2" y1="177.0" x2="264.5" y2="145.8" opacity="0.85"/>
+      <line class="ge" x1="256.2" y1="177.0" x2="279.3" y2="183.8" opacity="0.88"/>
+      <line class="ge" x1="256.2" y1="177.0" x2="230.7" y2="161.5" opacity="0.82"/>
+      <line class="ge" x1="153.6" y1="51.1" x2="223.7" y2="36.9" opacity="0.33"/>
+      <line class="ge" x1="396.7" y1="53.5" x2="399.8" y2="101.1" opacity="0.40"/>
+      <line class="ge" x1="396.7" y1="53.5" x2="448.2" y2="52.6" opacity="0.33"/>
+      <line class="ge" x1="181.6" y1="307.9" x2="197.1" y2="234.0" opacity="0.28"/>
+      <line class="ge" x1="181.6" y1="307.9" x2="232.0" y2="272.7" opacity="0.28"/>
+      <line class="ge" x1="251.6" y1="207.5" x2="279.3" y2="183.8" opacity="0.78"/>
+      <line class="ge" x1="380.8" y1="155.3" x2="411.1" y2="136.9" opacity="0.67"/>
+      <line class="ge" x1="380.8" y1="155.3" x2="368.9" y2="116.7" opacity="0.69"/>
+      <line class="ge" x1="327.1" y1="306.9" x2="285.9" y2="270.0" opacity="0.35"/>
+      <line class="ge" x1="12.6" y1="165.7" x2="33.3" y2="112.3" opacity="0.26"/>
+      <line class="ge" x1="516.5" y1="79.2" x2="448.2" y2="52.6" opacity="0.30"/>
+      <line class="ge" x1="223.7" y1="36.9" x2="212.4" y2="95.6" opacity="0.35"/>
+      <line class="ge" x1="525.2" y1="187.9" x2="575.3" y2="150.5" opacity="0.28"/>
+      <line class="ge" x1="197.1" y1="234.0" x2="202.7" y2="199.3" opacity="0.60"/>
+      <line class="ge" x1="197.1" y1="234.0" x2="232.0" y2="272.7" opacity="0.49"/>
+      <line class="ge" x1="197.1" y1="234.0" x2="150.7" y2="225.8" opacity="0.53"/>
+      <line class="ge" x1="202.7" y1="199.3" x2="230.7" y2="161.5" opacity="0.71"/>
+      <line class="ge" x1="331.1" y1="206.1" x2="305.6" y2="198.9" opacity="0.81"/>
+      <line class="ge" x1="399.8" y1="101.1" x2="448.2" y2="52.6" opacity="0.33"/>
+      <line class="ge" x1="399.8" y1="101.1" x2="411.1" y2="136.9" opacity="0.59"/>
+      <line class="ge" x1="399.8" y1="101.1" x2="368.9" y2="116.7" opacity="0.59"/>
+      <line class="ge" x1="232.0" y1="272.7" x2="285.9" y2="270.0" opacity="0.49"/>
+      <line class="ge" x1="232.0" y1="272.7" x2="260.1" y2="326.2" opacity="0.26"/>
+      <line class="ge" x1="301.9" y1="81.7" x2="330.9" y2="44.4" opacity="0.41"/>
+      <line class="ge" x1="347.3" y1="145.5" x2="368.9" y2="116.7" opacity="0.69"/>
+      <line class="ge" x1="285.9" y1="270.0" x2="260.1" y2="326.2" opacity="0.26"/>
+      <line class="ge" x1="74.9" y1="73.0" x2="33.3" y2="112.3" opacity="0.26"/>
+      <line class="ge" x1="74.9" y1="73.0" x2="111.8" y2="111.5" opacity="0.26"/>
+      <line class="ge" x1="120.7" y1="157.5" x2="111.8" y2="111.5" opacity="0.44"/>
+      <line class="ge gh" x1="300.0" y1="170.0" x2="322.6" y2="151.3"/>
+      <line class="ge gh" x1="442.8" y1="218.0" x2="413.1" y2="194.9"/>
+      <line class="ge gh" x1="442.8" y1="218.0" x2="488.3" y2="212.0"/>
+      <line class="ge gh" x1="413.1" y1="194.9" x2="380.8" y2="155.3"/>
+      <line class="ge gh" x1="380.8" y1="155.3" x2="347.3" y2="145.5"/>
+      <line class="ge gh" x1="525.2" y1="187.9" x2="488.3" y2="212.0"/>
+      <line class="ge gh" x1="347.3" y1="145.5" x2="322.6" y2="151.3"/>
+      <circle cx="300" cy="170" r="30" fill="url(#gglow)" class="gpulse"/>
+      <circle cx="300" cy="170" r="4" class="gn"/>
+      <circle cx="92.7" cy="205.3" r="1.5" class="gd" opacity="0.48"/>
+      <circle cx="382.8" cy="275.0" r="1.5" class="gd" opacity="0.50"/>
+      <circle cx="323.7" cy="122.7" r="2.1" class="gd" opacity="0.79"/>
+      <circle cx="519.7" cy="247.7" r="1.3" class="gd" opacity="0.37"/>
+      <circle cx="577.5" cy="211.2" r="1.1" class="gd" opacity="0.31"/>
+      <circle cx="69.6" cy="154.7" r="1.4" class="gd" opacity="0.44"/>
+      <circle cx="281.3" cy="211.1" r="2.2" class="gd" opacity="0.81"/>
+      <circle cx="442.8" cy="218.0" r="1.7" class="gn"/>
+      <circle cx="357.1" cy="193.2" r="2.2" class="gd" opacity="0.83"/>
+      <circle cx="238.7" cy="127.1" r="2.1" class="gd" opacity="0.76"/>
+      <circle cx="334.8" cy="250.9" r="1.8" class="gd" opacity="0.64"/>
+      <circle cx="352.7" cy="86.7" r="1.8" class="gd" opacity="0.61"/>
+      <circle cx="157.8" cy="112.0" r="1.7" class="gd" opacity="0.57"/>
+      <circle cx="495.1" cy="141.7" r="1.6" class="gd" opacity="0.51"/>
+      <circle cx="258.6" cy="92.2" r="1.8" class="gd" opacity="0.65"/>
+      <circle cx="285.9" cy="128.8" r="2.2" class="gd" opacity="0.82"/>
+      <circle cx="449.6" cy="178.6" r="1.8" class="gd" opacity="0.64"/>
+      <circle cx="413.1" cy="194.9" r="2.0" class="gn"/>
+      <circle cx="205.4" cy="144.6" r="2.1" class="gd" opacity="0.75"/>
+      <circle cx="337.9" cy="174.7" r="2.4" class="gd" opacity="0.91"/>
+      <circle cx="280.3" cy="36.2" r="1.3" class="gd" opacity="0.41"/>
+      <circle cx="448.1" cy="121.7" r="1.7" class="gd" opacity="0.58"/>
+      <circle cx="110.0" cy="258.5" r="1.3" class="gd" opacity="0.40"/>
+      <circle cx="161.8" cy="179.2" r="1.9" class="gd" opacity="0.66"/>
+      <circle cx="256.2" cy="177.0" r="2.4" class="gd" opacity="0.89"/>
+      <circle cx="153.6" cy="51.1" r="1.3" class="gd" opacity="0.37"/>
+      <circle cx="396.7" cy="53.5" r="1.4" class="gd" opacity="0.44"/>
+      <circle cx="181.6" cy="307.9" r="1.2" class="gd" opacity="0.33"/>
+      <circle cx="251.6" cy="207.5" r="2.2" class="gd" opacity="0.80"/>
+      <circle cx="380.8" cy="155.3" r="2.2" class="gn"/>
+      <circle cx="56.9" cy="250.7" r="1.1" class="gd" opacity="0.32"/>
+      <circle cx="327.1" cy="306.9" r="1.3" class="gd" opacity="0.40"/>
+      <circle cx="12.6" cy="165.7" r="1.1" class="gd" opacity="0.31"/>
+      <circle cx="516.5" cy="79.2" r="1.2" class="gd" opacity="0.34"/>
+      <circle cx="223.7" cy="36.9" r="1.3" class="gd" opacity="0.39"/>
+      <circle cx="525.2" cy="187.9" r="1.4" class="gn"/>
+      <circle cx="197.1" cy="234.0" r="1.8" class="gd" opacity="0.63"/>
+      <circle cx="575.3" cy="150.5" r="1.2" class="gd" opacity="0.33"/>
+      <circle cx="454.9" cy="278.6" r="1.3" class="gd" opacity="0.40"/>
+      <circle cx="202.7" cy="199.3" r="2.0" class="gd" opacity="0.73"/>
+      <circle cx="331.1" cy="206.1" r="2.2" class="gd" opacity="0.83"/>
+      <circle cx="399.8" cy="101.1" r="1.8" class="gd" opacity="0.61"/>
+      <circle cx="232.0" cy="272.7" r="1.6" class="gd" opacity="0.52"/>
+      <circle cx="212.4" cy="95.6" r="1.8" class="gd" opacity="0.61"/>
+      <circle cx="264.5" cy="145.8" r="2.3" class="gd" opacity="0.86"/>
+      <circle cx="301.9" cy="81.7" r="1.8" class="gd" opacity="0.61"/>
+      <circle cx="347.3" cy="145.5" r="2.3" class="gn"/>
+      <circle cx="285.9" cy="270.0" r="1.7" class="gd" opacity="0.56"/>
+      <circle cx="150.7" cy="225.8" r="1.7" class="gd" opacity="0.56"/>
+      <circle cx="330.9" cy="44.4" r="1.4" class="gd" opacity="0.45"/>
+      <circle cx="74.9" cy="73.0" r="1.1" class="gd" opacity="0.31"/>
+      <circle cx="120.7" cy="157.5" r="1.7" class="gd" opacity="0.56"/>
+      <circle cx="33.3" cy="112.3" r="1.1" class="gd" opacity="0.31"/>
+      <circle cx="448.2" cy="52.6" r="1.3" class="gd" opacity="0.37"/>
+      <circle cx="371.3" cy="236.1" r="1.9" class="gd" opacity="0.66"/>
+      <circle cx="322.6" cy="151.3" r="2.4" class="gn"/>
+      <circle cx="411.1" cy="136.9" r="1.9" class="gd" opacity="0.70"/>
+      <circle cx="279.3" cy="183.8" r="2.4" class="gd" opacity="0.92"/>
+      <circle cx="488.3" cy="212.0" r="1.5" class="gn"/>
+      <circle cx="230.7" cy="161.5" r="2.2" class="gd" opacity="0.83"/>
+      <circle cx="260.1" cy="326.2" r="1.1" class="gd" opacity="0.31"/>
+      <circle cx="111.8" cy="111.5" r="1.5" class="gd" opacity="0.48"/>
+      <circle cx="305.6" cy="198.9" r="2.3" class="gd" opacity="0.87"/>
+      <circle cx="368.9" cy="116.7" r="2.0" class="gd" opacity="0.71"/>
+      </svg>
           </li>
           <li><span class="branch">school</span>
             <ul>
